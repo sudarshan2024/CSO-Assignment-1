@@ -4,7 +4,7 @@
 lonely:
     movq $0, %rax # rax = 0
     movq $0, %rbx # rbx = 0 (Loop variable i)
-    imulq $2, %rsi # rsi *= 2
+    salq $1, %rsi # rsi *= 2
     jmp .C
 
 .L:
