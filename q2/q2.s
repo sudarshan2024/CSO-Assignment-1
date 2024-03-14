@@ -2,17 +2,17 @@
 
 # %rdi contains the pointer to first element of array a, %rsi contains n
 rotate:
-    movq $1, %rbx # rbx = 1 (Loop variable i)
     movq (%rdi), %rax # rax = a[0]
-    jmp .C
+    movq $1, %rbx # rbx = 1 (Loop variable i)
+    jmp .LoopCondition
 
-.L:
+.Loop:
     movq (%rdi, %rbx, 8), %rcx # rcx = a[i]
     movq %rcx, -8(%rdi, %rbx, 8) # a[i - 1] = rcx
     incq %rbx # i++
 
-.C:
+.LoopCondition:
     cmpq %rsi, %rbx # Compare i and n
-    jb .L # Jump to loop if strictly lesser than
-    movq %rax, -8(%rdi, %rbx, 8) # a[n - 1] = rax (a[0])
+    jb .Loop # Jump to loop if i < n
+    movq %rax, -8(%rdi, %rbx, 8) # a[n - 1] = a[0]
     ret

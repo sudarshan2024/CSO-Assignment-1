@@ -3,21 +3,22 @@
 # %rdi contains the pointer to first element of array a, %rsi contains n
 sum:
     movq $0, %rax
-    movq $0, %rbx # rbx = 0 (Loop variable i)
+    movq $1, %rbx # rbx = 1 (Loop variable i)
     movq (%rdi), %rcx # Smallest element
     movq (%rdi), %rdx # Largest element
-    jmp .C
+    jmp .LoopCondition
 
-.L:
-    cmpq (%rdi, %rbx, 8), %rcx # Smallest and a[i]
-    cmovnle (%rdi, %rbx, 8), %rcx # Move if less than
-    cmpq (%rdi, %rbx, 8), %rdx # Largest and a[i]
-    cmovnge (%rdi, %rbx, 8), %rdx # Move if greater than
+.Loop1:
+    movq (%rdi, %rbx, 8), %r8 # r8 = a[i]
+    cmpq %r8, %rcx # Smallest and a[i]
+    cmovnle %r8, %rcx # If a[i] < Smallest, Smallest = a[i]
+    cmpq %r8, %rdx # Largest and a[i]
+    cmovnge %r8, %rdx # If a[i] > Largest, Largest = a[i]
     incq %rbx # i++
 
-.C:
+.LoopCondition:
     cmpq %rsi, %rbx # Compare i and n
-    jb .L # Jump to loop if strictly lesser than
-    addq %rcx, %rax
-    addq %rdx, %rax
+    jb .Loop # Jump to loop if i < n
+    movq %rcx, %rax # rax = rcx
+    addq %rdx, %rax # rax += rdx
     ret
