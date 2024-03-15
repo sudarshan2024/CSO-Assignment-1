@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-typedef long long ll;
+typedef long long int ll;
 
 #define MAX_LENGTH 10001
 

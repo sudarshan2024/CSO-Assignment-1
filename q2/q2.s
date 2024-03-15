@@ -13,6 +13,6 @@ rotate:
 
 .LoopCondition:
     cmpq %rsi, %rbx # Compare i and n
-    jb .Loop # Jump to loop if i < n
+    jl .Loop # Jump to loop if i < n
     movq %rax, -8(%rdi, %rbx, 8) # a[n - 1] = a[0]
     ret

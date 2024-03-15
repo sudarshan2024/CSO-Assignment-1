@@ -14,5 +14,5 @@ lonely:
 
 .LoopCondition: # Checks whether i <= 2n
     cmpq %rsi, %rbx # Compare i and 2n
-    jbe .Loop # Jump to loop if i <= 2n
+    jle .Loop # Jump to loop if i <= 2n
     ret
