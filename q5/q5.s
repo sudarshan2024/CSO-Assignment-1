@@ -38,7 +38,7 @@ product:
     je .OneZero
     # ans[i] = Prod / a[i]
     movq %rdx, %r9 # r9 = ans, we temporarily store this since idivq takes rdx and rax together to store the dividend
-    movq $0, %rdx # rdx = 0
+    cqto # sign extend rax to rdx:rax
     idivq %r8 # rax /= a[i], idivq stores the quotient in %rax
     movq %r9, %rdx # rdx = r9 (Move rdx's original value back to it)
     movq %rax, (%rdx, %rbx, 8) # ans[i] = prod / a[i]
